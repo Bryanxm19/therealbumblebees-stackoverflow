@@ -52,3 +52,11 @@ post "/questions/:question_id/answers/new" do
     erb :'/questions/show'
   end
 end
+
+post "/questions/:question_id/answers/:answer_id/vote" do
+  question = Question.find(params[:question_id])
+  answer = Answer.find(params[:answer_id])
+  vote_type = params.key("submit_value")
+  answer.votes.create(user_id: session[:user_id], up_down: vote_type)
+  puts answer.votes.length
+end
