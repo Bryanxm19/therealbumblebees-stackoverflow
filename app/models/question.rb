@@ -5,7 +5,5 @@ class Question < ActiveRecord::Base
   has_many :answers
   has_many :votes, as: :votable
 
-  def num_answers
-    self.answers.length
-  end
+  include Countable
 end
