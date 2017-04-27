@@ -22,3 +22,16 @@ get '/questions/:id' do
   @question = Question.find(params[:id])
   erb :'/questions/show'
 end
+
+post "/questions/:question_id/answers/new" do
+  answer = Answer.new(params[:answer])
+  if answer.save
+    redirect "/questions/#{params[:answer][:question_id]}"
+  else
+    # if a current user, show errors
+    # else redirect to login
+    @question = Question.find(params[:answer][:question_id])
+    @errors = answer.errors.full_messages
+    erb :'/questions/show'
+  end
+end
