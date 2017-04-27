@@ -1,0 +1,6 @@
+<a href = '/questions/new'>New Question</a>
+<ul>
+  <% @questions.each do |question| %>
+    <li><a href="/questions/<%= question.id %>"><%= question.title %></a></li>
+  <% end %>
+</ul>
