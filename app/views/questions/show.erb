@@ -1,6 +1,7 @@
 <h1><%= @question.title %></h1>
 <p><%= @question.body %></p>
-
+<br>
+<h2>Answers:</h2>
 <% if @question.answers %>
   <ul>
   <% @question.answers.each do |answer| %>
@@ -9,8 +10,19 @@
 </ul>
 <% end %>
 
+<% if @errors %>
+  <h4>Errors:</h4>
+  <ul>
+    <% @errors.each do |error| %>
+      <li style="color: red;"><%= error %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <form method="POST" action="/questions/<%= @question.id %>/answers/new">
-<textarea rows = '4' cols = '50' placeholder = 'Write your answer here'></textarea>
+<input type = "hidden" name = "answer[question_id]" value = "<%= @question.id %>">
+<textarea rows = '4' cols = '50' name="answer[text]" placeholder = 'Write your answer here'></textarea>
+<br>
 <input type = "submit" value = "Submit Answer">
 </form>
 
