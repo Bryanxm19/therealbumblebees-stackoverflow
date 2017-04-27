@@ -6,4 +6,8 @@ class Question < ActiveRecord::Base
   has_many :votes, as: :votable
 
   include Countable
+
+  def num_answers
+    self.answers.length
+  end
 end

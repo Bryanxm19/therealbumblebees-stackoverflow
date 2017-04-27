@@ -19,7 +19,7 @@
               <form method="post" action="/questions/<%= @question.id %>/answers/<%= answer.id %>/vote" class="inline">
                 <button type="submit" name="up" value="submit_value" class="fa fa-chevron-up vote-button up-down-vote-button"></button>
                 <br>
-                <text class="up-down-vote-button">vote</text>
+                <text class="up-down-vote-button"><%= answer.vote_count %></text>
                 <br>
                 <button type="submit" name="down" value="submit_value" class="fa fa-chevron-down vote-button up-down-vote-button"></button>
               </form>
