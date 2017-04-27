@@ -5,7 +5,7 @@
   <a href="/questions/<%= @question.id %>/edit">Edit Question</a>
 
 <!-- Show answers -->
-<h2>Answers:</h2>
+<h2><%= @question.num_answers %> Answer<%= puts "s" if @question.num_answers > 1 %></h2>
 <% if @question.answers %>
   <ul>
   <% @question.answers.each do |answer| %>
@@ -19,8 +19,8 @@
 <%= erb :_errors %>
 
 <form method="POST" action="/questions/<%= @question.id %>/answers/new">
-<input type = "hidden" name = "answer[question_id]" value = "<%= @question.id %>">
-<textarea rows = '4' cols = '50' name="answer[text]" placeholder = 'Write your answer here'></textarea>
-<br>
-<input type = "submit" value = "Submit Answer">
+  <input type = "hidden" name = "answer[question_id]" value = "<%= @question.id %>">
+  <textarea rows = '4' cols = '50' name="answer[text]" placeholder = 'Write your answer here'></textarea>
+  <br>
+  <input type = "submit" value = "Submit Answer">
 </form>

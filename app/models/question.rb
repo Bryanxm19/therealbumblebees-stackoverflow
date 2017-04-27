@@ -4,4 +4,8 @@ class Question < ActiveRecord::Base
   belongs_to :user
   has_many :answers
   has_many :votes, as: :votable
+
+  def num_answers
+    self.answers.length
+  end
 end
