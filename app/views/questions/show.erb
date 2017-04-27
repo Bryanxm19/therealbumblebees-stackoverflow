@@ -1,26 +1,44 @@
-<!-- Show question -->
-<h1><%= @question.title %></h1>
-<p><%= @question.body %></p>
-<br>
-  <a href="/questions/<%= @question.id %>/edit">Edit Question</a>
+<div class="question-answer-container">
 
-<!-- Show answers -->
-<h2><%= @question.num_answers %> Answer<%= puts "s" if @question.num_answers > 1 %></h2>
-<% if @question.answers %>
-  <ul>
-  <% @question.answers.each do |answer| %>
-    <li><%= answer.text %></li>
-  <% end %>
-</ul>
-<% end %>
+  <!-- Show question -->
+  <div class="question">
+    <h1><%= @question.title %></h1>
+    <p><%= @question.body %></p>
+    <br>
+    <a href="/questions/<%= @question.id %>/edit">Edit Question</a>
+  </div>
 
-<!-- Submit new answer -->
+  <!-- Show answers -->
+  <div class="answer">
+    <h2><%= @question.num_answers %> Answer<%= puts "s" if @question.num_answers > 1 %></h2>
+    <% if @question.answers %>
+      <% @question.answers.each do |answer| %>
+        <table>
+          <tr>
+            <td>
+              <form method="" action="" class="inline">
+                <button type="submit" name="submit_param" value="submit_value" class="fa fa-chevron-up vote-button up-down-vote-button"></button>
+                <br>
+                <text class="up-down-vote-button">vote</text>
+                <br>
+                <button type="submit" name="submit_param" value="submit_value" class="fa fa-chevron-down vote-button up-down-vote-button"></button>
+              </form>
+            </td>
+            <td><%= answer.text %></td>
+          </tr>
+        </table>
+      <% end %>
+    <% end %>
 
-<%= erb :_errors %>
+    <!-- Submit new answer -->
+    <%= erb :_errors %>
 
-<form method="POST" action="/questions/<%= @question.id %>/answers/new">
-  <input type = "hidden" name = "answer[question_id]" value = "<%= @question.id %>">
-  <textarea rows = '4' cols = '50' name="answer[text]" placeholder = 'Write your answer here'></textarea>
-  <br>
-  <input type = "submit" value = "Submit Answer">
-</form>
+    <form method="POST" action="/questions/<%= @question.id %>/answers/new">
+      <input type = "hidden" name = "answer[question_id]" value = "<%= @question.id %>">
+      <textarea rows = '4' cols = '50' name="answer[text]" placeholder = 'Write your answer here'></textarea>
+      <br>
+      <input type = "submit" value = "Submit Answer">
+    </form>
+  </div>
+
+</div>
