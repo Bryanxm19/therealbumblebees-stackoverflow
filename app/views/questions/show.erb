@@ -7,18 +7,18 @@
   <ul>
   <% @question.answers.each do |answer| %>
     <li><%= answer.text %></li>
+    <a href="#"><%= answer.user.username %></a><br>
+    <a href="/answers/<%= answer.id %>/edit">Edit</a>
+    <a><form method="POST" action="/answers/<%= answer.id %>">
+      <input type="hidden" name="_method" value="delete">
+      <button type="submit">Delete</button>
+    </form></a>
+    <br>
   <% end %>
 </ul>
 <% end %>
 
-<% if @errors %>
-  <h4>Errors:</h4>
-  <ul>
-    <% @errors.each do |error| %>
-      <li style="color: red;"><%= error %></li>
-    <% end %>
-  </ul>
-<% end %>
+<%= erb :_errors %>
 
 <form method="POST" action="/questions/<%= @question.id %>/answers/new">
 <input type = "hidden" name = "answer[question_id]" value = "<%= @question.id %>">
