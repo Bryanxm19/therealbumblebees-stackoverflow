@@ -1,13 +1,14 @@
-# therealbumblebees-stackoverflow
+# Honey Overflow
 This will bee the sweetest version of Stack Overflow the world has ever seen.
 
-# Team: The Real Bumblebees
+## Team: The Real Bumblebees
 - Bryan Mateer
 - Tom Feng
 - Alex Camacho
 - Adriel Saporta
+- Gurkanver Brar
 
-# User Stories
+## User Stories
 - User can sign up for an account
 - User can log into and log out of an account
 - Logged out user can view all questions and answers
