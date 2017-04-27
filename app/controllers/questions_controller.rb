@@ -53,7 +53,7 @@ end
 
 get '/questions/:id/edit' do
     @question = Question.find(params[:id])
-    if current_user.id == @question.user_id
+    if logged_in? && (current_user.id == @question.user_id)
       erb :'/questions/edit'
     else
       @errors = ["Question does not belong to you."]
@@ -64,7 +64,7 @@ end
 put '/questions/:id' do
   @question = Question.find(params[:id])
   @question.assign_attributes(params[:question])
-  if current_user.id == @question.user_id
+  if logged_in? && (current_user.id == @question.user_id)
     if @question.save
       redirect "/questions/#{@question.id}"
     else
