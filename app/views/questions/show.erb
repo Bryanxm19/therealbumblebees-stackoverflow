@@ -1,6 +1,7 @@
 <h1><%= @question.title %></h1>
 <p><%= @question.body %></p>
 <br>
+  <a href="/questions/<%= @question.id %>/edit">Edit Question</a>
 <h2>Answers:</h2>
 <% if @question.answers %>
   <ul>
