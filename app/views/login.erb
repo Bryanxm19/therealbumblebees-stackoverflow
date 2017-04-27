@@ -1,0 +1,17 @@
+<form class="login" action="/login" method="post">
+  <table>
+    <tr>
+      <td><label for="email">Email: </label></td>
+      <td><input type="text" name="user[email]"></td>
+    </tr>
+    <tr>
+      <td><label for="password">Password: </label></td>
+      <td><input type="password" name="user[password]"></td>
+    </tr>
+
+  </table>
+  <br>
+  <%= erb :_errors %>
+  <br>
+  <input type="submit" value="Sign In">
+</form>
