@@ -24,14 +24,13 @@
     <input type="text" name="search" placeholder="Search...">
   </form>
   <ul>
-    <!-- make below Logged in method -->
-    <% if 2==2 %>
-      <li><a href="#">logout</a></li>
+    <% if logged_in? == true %>
+      <li><a href="/logout">logout</a></li>
     <% else %>
-      <li><a href="#">sign up</a></li>
-      <li><a href="#">login</a></li>
+      <li><a href="/users/new">sign up</a></li>
+      <li><a href="/login">login</a></li>
     <% end %>
-    <li><a href="#">home</a></li>
+    <li><a href="/">home</a></li>
   </ul>
   </nav>
   <%= yield %>
