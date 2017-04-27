@@ -1,0 +1,16 @@
+<h1><%= @question.title %></h1>
+<p><%= @question.body %></p>
+
+<% if @question.answers %>
+  <ul>
+  <% @question.answers.each do |answer| %>
+    <li><%= answer.text %></li>
+  <% end %>
+</ul>
+<% end %>
+
+<form method="POST" action="/questions/<%= @question.id %>/answers/new">
+<textarea rows = '4' cols = '50' placeholder = 'Write your answer here'></textarea>
+<input type = "submit" value = "Submit Answer">
+</form>
+
