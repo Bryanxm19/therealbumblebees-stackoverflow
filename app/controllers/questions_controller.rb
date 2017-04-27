@@ -56,7 +56,7 @@ get '/questions/:id/edit' do
     if logged_in? && (current_user.id == @question.user_id)
       erb :'/questions/edit'
     else
-      @errors = ["Question does not belong to you."]
+      @errors = ["404 Page does not exist for you."]
       erb :"/questions/show"
     end
 end
@@ -72,7 +72,7 @@ put '/questions/:id' do
       erb :'/questions/edit'
     end
   else
-    @errors = ["Question does not belong to you."]
+    @errors = ["404 Page does not exist for you."]
     erb :"/questions/show"
 
   end
