@@ -1,0 +1,9 @@
+<%= erb :_errors %>
+
+<form method="POST" action="/answers/<%= @answer.id %>">
+  <input type="hidden" name="_method" value="put">
+  <label for="answer">Answer:</label>
+  <input type="text" name="answer[text]" size="50" value="<%= @answer.text %>">
+  <br>
+  <input type="submit" value="Edit Answer">
+</form>
