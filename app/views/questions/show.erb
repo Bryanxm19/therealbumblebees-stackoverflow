@@ -7,7 +7,7 @@
     <p>asked <%= @question.time_ago_in_words(@question.created_at)%></p>
     <p><a href="/users/<%=@question.user.id%>"><%= @question.user.username %></a></p>
     <br>
-    <% if current_user.id == @question.user_id %>
+    <% if current_user.id == @question.user_id %><!-- Show question -->
     <form action = "/questions/<%= @question.id %>/edit" method = "get">
     <input type="submit" value="Edit Question">
     </form>
@@ -16,6 +16,15 @@
     <input type="submit" value="Delete Question">
     </form>
     <% end %>
+    <h5>Comments</h5>
+    <% if @question.comments %>
+      <% @question.comments.each do |comment| %>
+      <%= comment.text %>
+      <br>
+      <% end %>
+    <% end %>
+    <br>
+    <a href = '/questions/<%= @question.id %>/comments/new'>Add a comment</a>
   </div>
 
   <!-- Show answers -->

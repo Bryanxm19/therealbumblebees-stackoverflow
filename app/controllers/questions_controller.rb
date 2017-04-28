@@ -96,3 +96,31 @@ post "/questions/:question_id/answers/:answer_id/vote" do
   answer.votes.create(user_id: session[:user_id], up_down: vote_type)
   answer.vote_count.to_s
 end
+
+get "/questions/:question_id/comments/new" do
+  if logged_in?
+    @question = Question.find(params[:question_id])
+    erb :'/comments/new'
+  else
+    @errors = ["Please Login"]
+    erb :'/login'
+  end
+end
+
+post "/questions/:question_id/comments/new" do
+  if logged_in?
+  comment = Comment.new(params[:comment])
+    if comment.save
+      redirect "/questions/#{params[:comment][:commentable_id]}"
+    else
+      # if a current user, show errors
+      # else redirect to login
+      @question = Question.find(params[:comment][:commentable_id])
+      @errors = comment.errors.full_messages
+      erb :'/questions/show'
+    end
+  else
+    @errors = ["Please Login"]
+    erb :'/login'
+  end
+end
