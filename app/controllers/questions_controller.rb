@@ -57,6 +57,9 @@ post "/questions/:question_id/answers/:answer_id/vote" do
   answer = Answer.find(params[:answer_id])
   vote_type = params[:vote_type]
   hey = answer.votes.create(user_id: session[:user_id], up_down: vote_type)
-  puts hey
+  puts "HEY HERE I AM =-----------"
+  puts hey.valid?
+  puts hey.persisted?
+  puts hey.errors.full_messages
   answer.vote_count.to_s
 end

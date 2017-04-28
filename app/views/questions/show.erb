@@ -16,7 +16,7 @@
         <table>
           <tr>
             <td>
-              <form method="post" action="/questions/<%= @question.id %>/answers/<%= answer.id %>/vote" class="inline">
+              <form method="post" action="/questions/<%= @question.id %>/answers/<%= answer.id %>/vote" class="inline" question="<%= @question.id %>" answer="<%= answer.id %>">
                 <button type="submit" name="up" value="submit_value" class="fa fa-chevron-up vote-button up-down-vote-button"></button>
                 <br>
                 <text class="up-down-vote-button"><%= answer.vote_count %></text>

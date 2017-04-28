@@ -3,8 +3,8 @@ $(document).ready(function() {
     event.preventDefault();
     button = this
 
-    question_id = $(this).parent().attr("action").slice(11, 12)
-    answer_id = $(this).parent().attr("action").slice(21, 22)
+    question_id = $(this).parent().attr("question")
+    answer_id = $(this).parent().attr("answer")
     vote_type = $(this).attr("name")
 
     $.ajax({
