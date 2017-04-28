@@ -17,11 +17,15 @@
           <tr>
             <td>
               <form method="post" action="/questions/<%= @question.id %>/answers/<%= answer.id %>/vote" class="inline" question="<%= @question.id %>" answer="<%= answer.id %>">
-                <button type="submit" name="up" value="submit_value" class="fa fa-chevron-up vote-button up-down-vote-button up-button"></button>
+                <% if Vote.find_by(user_id: current_user.id, votable_id: answer.id, votable_type: "Answer") != nil %>
+                  <button type="submit" name="up" opposite="down" value="submit_value" class="fa fa-chevron-up vote-button up-down-vote-button up-button voted" voted="true"></button>
+                <% else %>
+                  <button type="submit" name="up" opposite="down" value="submit_value" class="fa fa-chevron-up vote-button up-down-vote-button up-button"></button>
+                <% end %>
                 <br>
                 <text class="up-down-vote-button"><%= answer.vote_count %></text>
                 <br>
-                <button type="submit" name="down" value="submit_value" class="fa fa-chevron-down vote-button up-down-vote-button down-button"></button>
+                <button type="submit" name="down" opposite="up" value="submit_value" class="fa fa-chevron-down vote-button up-down-vote-button down-button"></button>
               </form>
             </td>
             <td><%= answer.text %></td>

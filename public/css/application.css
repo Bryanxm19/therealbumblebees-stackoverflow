@@ -26,3 +26,12 @@ input[type=text] {
   vertical-align: sub;
   padding: 1px 0px 0px 0px;
 }
+
+.up-down-vote-button.up-button.voted {
+  background-color: transparent;
+  border: none;
+  padding-top: 5px;
+  color: darkorange;
+  vertical-align: sub;
+  padding: 1px 0px 0px 0px;
+}

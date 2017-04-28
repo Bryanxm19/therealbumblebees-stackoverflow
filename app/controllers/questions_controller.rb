@@ -85,6 +85,28 @@ post "/questions/:question_id/answers/:answer_id/vote" do
   answer.vote_count.to_s
 end
 
+post "/questions/:question_id/answers/:answer_id/vote_twice" do
+answer = Answer.find(params[:answer_id])
+  puts "VOTE COUNT HEREEEEEEEE"
+  puts answer.vote_count.to_s
+
+  vote = Vote.find_by(user_id: current_user.id, votable_id: params[:answer_id], votable_type: "Answer")
+  vote.destroy
+  puts "VOTE COUNT HEREEEEEEEE"
+  puts answer.vote_count.to_s
+
+  answer = Answer.find(params[:answer_id])
+  vote_type = params[:vote_type]
+  hey = answer.votes.create(user_id: session[:user_id], up_down: vote_type)
+  puts "VOTE COUNT HEREEEEEEEE"
+  puts answer.vote_count.to_s
+  puts hey.persisted?
+  puts hey.up_down
+    puts hey.errors.full_messages
+
+  answer.vote_count.to_s
+end
+
 post "/questions/:question_id/answers/:answer_id/unvote" do
   vote = Vote.find_by(user_id: current_user.id, votable_id: params[:answer_id], votable_type: "Answer")
   vote.destroy
