@@ -7,4 +7,5 @@ class Answer < ActiveRecord::Base
   has_many :votes, as: :votable
 
   include Countable
+  include ActionView::Helpers::DateHelper
 end
