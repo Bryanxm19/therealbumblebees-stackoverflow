@@ -25,13 +25,14 @@
     <input type="text" name="search" placeholder="Search...">
   </form>
   <ul>
-    <% if logged_in? == true %>
-      <li><a href="/logout">logout</a></li>
+    <% if logged_in? %>
+    <li><a href="/users/<%= session[:user_id] %>">Profile</a></li>
+      <li><a href="/logout">Logout</a></li>
     <% else %>
-      <li><a href="/users/new">sign up</a></li>
-      <li><a href="/login">login</a></li>
+      <li><a href="/users/new">Sign Up</a></li>
+      <li><a href="/login">Login</a></li>
     <% end %>
-    <li><a href="/">home</a></li>
+    <li><a href="/">Home</a></li>
   </ul>
   </nav>
   <%= yield %>

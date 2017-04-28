@@ -11,18 +11,17 @@
       </span>
 
       <span>
-        <%if question.answers.count == 1%>
-           <%=question.answers.count%> answer
-       <%else%>
-           <%=question.answers.count%> answers
-       <%end%>
-      </span>
+       <%if question.answers.count == 1%>
+          <%=question.answers.count%> answer
+      <%else%>
+          <%=question.answers.count%> answers
+      <%end%>
+ </span>
+ <a href="/questions/<%= question.id %>"><%=question.title%></a>
 
-      <a href="/questions/<%= question.id %>"><%=question.title%></a>
-
-      <span>asked <%=question.time_ago_in_words(question.created_at)%> ago</span>
-
-      <span>By <%=question.user.username%></span>
+  <span>By <a href="/users/<%=question.user.id%>"><%=question.user.username%></a></span>
+  <span>asked <%=question.time_ago_in_words(question.created_at)%> ago</span>
+ <%end%>
     </li>
   <%end%>
 

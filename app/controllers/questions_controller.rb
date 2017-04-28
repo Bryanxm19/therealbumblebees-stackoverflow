@@ -5,6 +5,7 @@ end
 
 get '/questions/new' do
   if logged_in?
+
     erb :'/questions/new'
   else
     @errors = ["Please Login"]
@@ -14,6 +15,7 @@ get '/questions/new' do
 end
 
 post '/questions' do
+  @question = Question.find_by_id(params[:id])
   if logged_in?
     question = Question.new(params[:question])
     if question.save
@@ -29,9 +31,10 @@ post '/questions' do
 end
 
 get '/questions/:id' do
-  @question = Question.find(params[:id])
+  @question = Question.find_by_id(params[:id])
   erb :'/questions/show'
 end
+
 
 get '/questions/:id/edit' do
     @question = Question.find(params[:id])

@@ -3,7 +3,10 @@ get '/users/new' do
 end
 
 get '/users/:id' do
+  @user = User.find_by(id: params[:id])
+  @question = Question.find_by(user_id: params[:question_id])
 
+  erb :'/users/show'
 end
 
 post '/users' do
