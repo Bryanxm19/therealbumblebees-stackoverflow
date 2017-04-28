@@ -33,6 +33,7 @@
               </form>
             </td>
             <td><%= answer.text %><br>
+              <% if current_user.id == answer.user_id %>
               <form action = "/answers/<%= answer.id %>/edit" method = "get">
               <input type="submit" value="Edit Answer">
               </form>
@@ -40,6 +41,7 @@
               <input type="hidden" name="_method" value="DELETE">
               <input type="submit" value="Delete Answer">
               </form>
+              <% end %>
             </td>
           </tr>
         </table>
