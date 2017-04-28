@@ -33,24 +33,6 @@ get '/questions/:id' do
   erb :'/questions/show'
 end
 
-post "/questions/:question_id/answers/new" do
-  if logged_in?
-  answer = Answer.new(params[:answer])
-    if answer.save
-      redirect "/questions/#{params[:answer][:question_id]}"
-    else
-      # if a current user, show errors
-      # else redirect to login
-      @question = Question.find(params[:answer][:question_id])
-      @errors = answer.errors.full_messages
-      erb :'/questions/show'
-    end
-  else
-    @errors = ["Please Login"]
-    erb :'/login'
-  end
-end
-
 get '/questions/:id/edit' do
     @question = Question.find(params[:id])
     if logged_in? && (current_user.id == @question.user_id)
@@ -76,4 +58,29 @@ put '/questions/:id' do
     erb :"/questions/show"
 
   end
+end
+
+post "/questions/:question_id/answers/new" do
+  if logged_in?
+  answer = Answer.new(params[:answer])
+    if answer.save
+      redirect "/questions/#{params[:answer][:question_id]}"
+    else
+      # if a current user, show errors
+      # else redirect to login
+      @question = Question.find(params[:answer][:question_id])
+      @errors = answer.errors.full_messages
+      erb :'/questions/show'
+    end
+  else
+    @errors = ["Please Login"]
+    erb :'/login'
+  end
+end
+
+post "/questions/:question_id/answers/:answer_id/vote" do
+  answer = Answer.find(params[:answer_id])
+  vote_type = params[:vote_type]
+  answer.votes.create(user_id: session[:user_id], up_down: vote_type)
+  answer.vote_count.to_s
 end

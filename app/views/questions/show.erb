@@ -1,29 +1,45 @@
-<h1><%= @question.title %></h1>
-<p><%= @question.body %></p>
-<br>
-  <a href="/questions/<%= @question.id %>/edit">Edit Question</a>
-<h2>Answers:</h2>
-<% if @question.answers %>
-  <ul>
-  <% @question.answers.each do |answer| %>
-    <li><%= answer.text %></li>
-    <a href="#"><%= answer.user.username %></a><br>
-    <a href="/answers/<%= answer.id %>/edit">Edit</a>
-    <a><form method="POST" action="/answers/<%= answer.id %>">
-      <input type="hidden" name="_method" value="delete">
-      <button type="submit">Delete</button>
-    </form></a>
+<div class="question-answer-container">
+
+  <!-- Show question -->
+  <div class="question">
+    <h1><%= @question.title %></h1>
+    <p><%= @question.body %></p>
     <br>
-  <% end %>
-</ul>
-<% end %>
+    <a href="/questions/<%= @question.id %>/edit">Edit Question</a>
+  </div>
 
-<%= erb :_errors %>
+  <!-- Show answers -->
+  <div class="answer">
+    <h2><%= @question.num_answers %> Answer<%= puts "s" if @question.num_answers > 1 %></h2>
+    <% if @question.answers %>
+      <% @question.answers.each do |answer| %>
+        <table>
+          <tr>
+            <td>
+              <form method="post" action="/questions/<%= @question.id %>/answers/<%= answer.id %>/vote" class="inline" question="<%= @question.id %>" answer="<%= answer.id %>">
+                <button type="submit" name="up" value="submit_value" class="fa fa-chevron-up vote-button up-down-vote-button up-button"></button>
+                <br>
+                <text class="up-down-vote-button"><%= answer.vote_count %></text>
+                <br>
+                <button type="submit" name="down" value="submit_value" class="fa fa-chevron-down vote-button up-down-vote-button down-button"></button>
+              </form>
+            </td>
+            <td><%= answer.text %></td>
+          </tr>
+        </table>
+      <% end %>
+    <% end %>
 
-<form method="POST" action="/questions/<%= @question.id %>/answers/new">
-<input type = "hidden" name = "answer[question_id]" value = "<%= @question.id %>">
-<textarea rows = '4' cols = '50' name="answer[text]" placeholder = 'Write your answer here'></textarea>
-<br>
-<input type = "submit" value = "Submit Answer">
-</form>
+    <!-- Submit new answer -->
+    <%= erb :_errors %>
 
+    <form method="POST" action="/questions/<%= @question.id %>/answers/new">
+      <input type = "hidden" name = "answer[user_id]" value = "<%= current_user.id %>">
+      <input type = "hidden" name = "answer[question_id]" value = "<%= @question.id %>">
+      <textarea rows = '4' cols = '50' name="answer[text]" placeholder = 'Write your answer here'></textarea>
+      <br>
+      <input type = "submit" value = "Submit Answer">
+    </form>
+  </div>
+
+</div>
