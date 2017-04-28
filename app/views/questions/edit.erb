@@ -1,12 +1,6 @@
 <h1>Edit Question:</h1>
 
-<% if @errors %>
-  <ul>
-  <% @errors.each do |error| %>
-    <li><%= error %></li>
-  <% end %>
-  </ul>
-<% end %>
+<%= erb :_errors %>
 
 <form method="POST", action="/questions/<%= @question.id %>">
   <input type="hidden" name="_method" value="PUT">

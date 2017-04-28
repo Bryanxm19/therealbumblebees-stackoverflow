@@ -1,6 +1,24 @@
 <a href = '/questions/new'>New Question</a>
 <ul>
   <% @questions.each do |question| %>
-    <li><p><%= question.vote_count %></p><nobr><a href="/questions/<%= question.id %>"><%= question.title %></a></li>
-  <% end %>
+    <li>
+      <span>
+        <%if question.vote_count == 1%>
+        <%=question.vote_count%> vote
+        <%else%>
+        <%=question.vote_count%> votes
+        <%end%>
+      </span>
+
+      <span>
+       <%if question.answers.count == 1%>
+          <%=question.answers.count%> answer
+      <%else%>
+          <%=question.answers.count%> answers
+      <%end%>
+ </span>
+ <a href="/questions/<%= question.id %>"><%=question.title%></a>
+ <span>By <%=question.user.username%></span>
+ <%end%>
+    </li>
 </ul>
