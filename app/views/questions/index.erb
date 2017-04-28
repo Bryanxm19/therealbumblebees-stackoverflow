@@ -18,6 +18,7 @@
       <%end%>
  </span>
  <a href="/questions/<%= question.id %>"><%=question.title%></a>
+ <span><%=question.time_ago_in_words(question.created_at)%> ago</span>
  <span>By <%=question.user.username%></span>
  <%end%>
     </li>
