@@ -1,7 +1,14 @@
 $(document).ready(function() {
-  // This is called after the document has loaded in its entirety
-  // This guarantees that any elements we bind to will exist on the page
-  // when we try to bind to them
+  $("button.up-down-vote-button").on("click", function(event) {
+    event.preventDefault();
 
-  // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
+    question_id = $(this).parent().attr("action").slice(11, 12)
+    answer_id = $(this).parent().attr("action").slice(21, 22)
+
+    // $.ajax({
+    //   url: "/questions/:question_id/answers/:answer_id/vote",
+    //   method: "POST",
+    //
+    // })
+  })
 });
