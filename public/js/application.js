@@ -13,20 +13,33 @@ $(document).ready(function() {
 
     if (up_click === false) {
       // odd clicks
-      $.ajax({
-        url: "/questions/" + question_id + "/answers/" + answer_id + "/vote",
+      if (down_click === false) {
+        // if up click is not pressed and down click is not pressed, create one upvote
+        request = $.ajax({
+          url: "/questions/" + question_id + "/answers/" + answer_id + "/vote",
+          method: "POST",
+          data: {question_id: question_id, answer_id: answer_id, vote_type: vote_type}
+        })
+      } else {
+        // if up click is not pressed and down click is pressed, create two upvotes
+        request = $.ajax({
+        url: "/questions/" + question_id + "/answers/" + answer_id + "/vote_twice",
         method: "POST",
         data: {question_id: question_id, answer_id: answer_id, vote_type: vote_type}
-      })
-      .done(function(response) {
+        })
+      }
+
+      request.done(function(response) {
         $(button).next().next().html(response)
         $(button).css("color", "darkorange")
         $(button).addClass("voted")
+        $(button).next().next().next().next().css("color", "dimgrey")
+        $(button).removeClass("voted")
       })
       up_click = true;
-      console.log(up_click)
     } else {
       // even clicks
+      // if up click is already pressed, undo the upvote (destroy the vote)
       $.ajax({
         url: "/questions/" + question_id + "/answers/" + answer_id + "/unvote",
         method: "POST",
