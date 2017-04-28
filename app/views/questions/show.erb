@@ -4,6 +4,8 @@
   <div class="question">
     <h1><%= @question.title %></h1>
     <p><%= @question.body %></p>
+    <p>asked <%= @question.time_ago_in_words(@question.created_at)%></p>
+    <p><a href="/users/<%=@question.user.id%>"><%= @question.user.username %></a></p>
     <br>
     <a href="/questions/<%= @question.id %>/edit">Edit Question</a>
   </div>
@@ -25,6 +27,7 @@
               </form>
             </td>
             <td><%= answer.text %></td>
+            <td class="answer user and time">answered <%= answer.time_ago_in_words(answer.created_at) %> by <a href="/users/<%=answer.user.id%>"><%= answer.user.username %></a></td>
           </tr>
         </table>
       <% end %>
