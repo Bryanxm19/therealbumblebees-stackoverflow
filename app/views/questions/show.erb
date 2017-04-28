@@ -32,7 +32,15 @@
                 <button type="submit" name="down" value="submit_value" class="fa fa-chevron-down vote-button up-down-vote-button down-button"></button>
               </form>
             </td>
-            <td><%= answer.text %></td>
+            <td><%= answer.text %><br>
+              <form action = "/answers/<%= answer.id %>/edit" method = "get">
+              <input type="submit" value="Edit Answer">
+              </form>
+              <form action = "/answers/<%= answer.id %>" method = "post">
+              <input type="hidden" name="_method" value="DELETE">
+              <input type="submit" value="Delete Answer">
+              </form>
+            </td>
           </tr>
         </table>
       <% end %>
