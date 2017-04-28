@@ -54,9 +54,9 @@ post "/questions/:question_id/answers/new" do
 end
 
 post "/questions/:question_id/answers/:answer_id/vote" do
-  question = Question.find(params[:question_id])
   answer = Answer.find(params[:answer_id])
-  vote_type = params.key("submit_value")
-  answer.votes.create(user_id: session[:user_id], up_down: vote_type)
-  puts answer.votes.length
+  vote_type = params[:vote_type]
+  hey = answer.votes.create(user_id: session[:user_id], up_down: vote_type)
+  puts hey
+  answer.vote_count.to_s
 end
