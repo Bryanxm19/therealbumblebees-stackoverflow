@@ -5,7 +5,9 @@
     <h1><%= @question.title %></h1>
     <p><%= @question.body %></p>
     <br>
+    <% if current_user.id == @question.user_id %>
     <a href="/questions/<%= @question.id %>/edit">Edit Question</a>
+    <% end %>
   </div>
 
   <!-- Show answers -->
