@@ -32,14 +32,14 @@
 
     <!-- Submit new answer -->
     <%= erb :_errors %>
-
     <form method="POST" action="/questions/<%= @question.id %>/answers/new">
-      <input type = "hidden" name = "answer[user_id]" value = "<%= current_user.id %>">
+      <input type = "hidden" name = "answer[user_id]" value = "<%= current_user.id if logged_in? %>">
       <input type = "hidden" name = "answer[question_id]" value = "<%= @question.id %>">
       <textarea rows = '4' cols = '50' name="answer[text]" placeholder = 'Write your answer here'></textarea>
       <br>
       <input type = "submit" value = "Submit Answer">
     </form>
+
   </div>
 
 </div>
