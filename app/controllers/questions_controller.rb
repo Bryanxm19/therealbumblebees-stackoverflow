@@ -84,3 +84,10 @@ post "/questions/:question_id/answers/:answer_id/vote" do
   answer.votes.create(user_id: session[:user_id], up_down: vote_type)
   answer.vote_count.to_s
 end
+
+post "/questions/:question_id/answers/:answer_id/unvote" do
+  vote = Vote.find_by(user_id: current_user.id, votable_id: params[:answer_id], votable_type: "Answer")
+  vote.destroy
+  answer = Answer.find(params[:answer_id])
+  answer.vote_count.to_s
+end
