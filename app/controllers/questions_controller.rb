@@ -151,4 +151,5 @@ post "/questions/:question_id/comments/new" do
   else
     @errors = ["Please Login"]
     erb :'/login'
+  end
 end
