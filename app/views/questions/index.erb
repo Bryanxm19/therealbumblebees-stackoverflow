@@ -18,7 +18,8 @@
       <%end%>
  </span>
  <a href="/questions/<%= question.id %>"><%=question.title%></a>
- <span>By <%=question.user.username%></span>
+<span>
+ By <a href="/users/<%=question.user.id%>"><%=question.user.username%></a>
 </span>
  <%end%>
     </li>
