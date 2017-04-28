@@ -1,0 +1,9 @@
+<%= erb :_errors %>
+
+<form method="POST" action="/comments/<%= @comments.id %>">
+  <input type="hidden" name="_method" value="put">
+  <label for="answer">Comment:</label>
+  <input type="text" name="answer[text]" size="50" value="<%= @comment.text %>">
+  <br>
+  <input type="submit" value="Edit Answer">
+</form>

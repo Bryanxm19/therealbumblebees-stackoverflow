@@ -1,0 +1,8 @@
+<form method="POST" action="/questions/<%= @question.id %>/comments/new">
+  <input type = "hidden" name = "comment[user_id]" value = "<%= current_user.id %>">
+  <input type = "hidden" name = "comment[commentable_id]" value = "<%= @question.id %>">
+  <input type = "hidden" name = "comment[commentable_type]" value = "Question">
+  <textarea rows = '4' cols = '50' name="comment[text]" placeholder = 'Write your comment here'></textarea>
+  <br>
+  <input type = "submit" value = "Submit Comment">
+</form>
