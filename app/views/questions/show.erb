@@ -4,25 +4,27 @@
   <div class="question">
     <h1><%= @question.title %></h1>
     <p><%= @question.body %></p>
-    <p>asked <%= @question.time_ago_in_words(@question.created_at)%></p>
+    <p>asked <%= @question.time_ago_in_words(@question.created_at)%> ago</p>
     <p><a href="/users/<%=@question.user.id%>"><%= @question.user.username %></a></p>
     <br>
-    <% if current_user.id == @question.user_id %><!-- Show question -->
-    <form action = "/questions/<%= @question.id %>/edit" method = "get">
-    <input type="submit" value="Edit Question">
-    </form>
-    <form action = "/questions/<%= @question.id %>" method = "post">
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="submit" value="Delete Question">
-    </form>
-    <% end %>
-    <h5>Comments</h5>
-    <% if @question.comments %>
-      <% @question.comments.each do |comment| %>
-      <%= comment.text %>
-      <br>
+    <% if logged_in? %>
+      <% if current_user.id == @question.user_id %>
+        <form action = "/questions/<%= @question.id %>/edit" method = "get">
+          <input type="submit" value="Edit Question">
+        </form>
+        <form action = "/questions/<%= @question.id %>" method = "post">
+          <input type="hidden" name="_method" value="DELETE">
+          <input type="submit" value="Delete Question">
+        </form>
       <% end %>
     <% end %>
+    <h5>Comments</h5>
+      <% if @question.comments %>
+        <% @question.comments.each do |comment| %>
+          <%= comment.text %>
+          <br>
+        <% end %>
+      <% end %>
     <br>
     <a href = '/questions/<%= @question.id %>/comments/new'>Add a comment</a>
   </div>
@@ -36,24 +38,32 @@
           <tr>
             <td>
               <form method="post" action="/questions/<%= @question.id %>/answers/<%= answer.id %>/vote" class="inline" question="<%= @question.id %>" answer="<%= answer.id %>">
-                <button type="submit" name="up" value="submit_value" class="fa fa-chevron-up vote-button up-down-vote-button up-button"></button>
-                <br>
-                <text class="up-down-vote-button"><%= answer.vote_count %></text>
-                <br>
-                <button type="submit" name="down" value="submit_value" class="fa fa-chevron-down vote-button up-down-vote-button down-button"></button>
+                <% if current_user %>
+                  <% if Vote.find_by(user_id: current_user.id, votable_id: answer.id, votable_type: "Answer") != nil %>
+                    <button type="submit" name="up" opposite="down" value="submit_value" class="fa fa-chevron-up vote-button up-down-vote-button up-button voted" voted="true"></button>
+                  <% else %>
+                    <button type="submit" name="up" opposite="down" value="submit_value" class="fa fa-chevron-up vote-button up-down-vote-button up-button"></button>
+                  <% end %>
+                  <br>
+                  <text class="up-down-vote-button"><%= answer.vote_count %></text>
+                  <br>
+                  <button type="submit" name="down" opposite="up" value="submit_value" class="fa fa-chevron-down vote-button up-down-vote-button down-button"></button>
+                <% end %>
               </form>
             </td>
             <td>
-              <%= answer.text %><br><br>
+              <%= answer.text %>
               <p class="answer user and time">answered <%= answer.time_ago_in_words(answer.created_at) %> by <a href="/users/<%=answer.user.id%>"><%= answer.user.username %></a></p>
-              <% if current_user.id == answer.user_id %>
-              <form action = "/answers/<%= answer.id %>/edit" method = "get">
-              <input type="submit" value="Edit Answer">
-              </form>
-              <form action = "/answers/<%= answer.id %>" method = "post">
-              <input type="hidden" name="_method" value="DELETE">
-              <input type="submit" value="Delete Answer">
-              </form>
+              <% if current_user %>
+                <% if current_user.id == answer.user_id %>
+                  <form action = "/answers/<%= answer.id %>/edit" method = "get">
+                  <input type="submit" value="Edit Answer">
+                  </form>
+                  <form action = "/answers/<%= answer.id %>" method = "post">
+                  <input type="hidden" name="_method" value="DELETE">
+                  <input type="submit" value="Delete Answer">
+                  </form>
+                <% end %>
               <% end %>
             </td>
           </tr>
