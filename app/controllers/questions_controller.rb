@@ -56,9 +56,12 @@ end
 post "/questions/:question_id/answers/:answer_id/vote" do
   answer = Answer.find(params[:answer_id])
   vote_type = params[:vote_type]
+  puts "THIS IS answer.vote_count BEFORE ---------- THIS IS HEY"
+  puts answer.vote_count
   hey = answer.votes.create(user_id: session[:user_id], up_down: vote_type)
-  puts "HEY HERE I AM =-----------"
-  puts hey.valid?
+  puts "THIS IS answer.vote_count AFTER ---------- THIS IS HEY"
+  puts answer.vote_count
+  puts hey.inspect
   puts hey.persisted?
   puts hey.errors.full_messages
   answer.vote_count.to_s
