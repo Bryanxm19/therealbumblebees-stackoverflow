@@ -1,0 +1,21 @@
+<div class="container">
+  <% if current_user %>
+    <h3>Welcome <%= @user.username%></h3>
+    <%else%>
+    <h3><%= @user.username%>'s questions</h3>
+  <% end %>
+  <h4>View all questions</h4>
+
+<% @user.questions.each do |question| %>
+  <a href="/questions/<%=question.id%>"><%=question.title%></a><br>
+<% end %>
+</div>
+
+<div class="container">
+  <h3>All answers</h3>
+  <% @user.answers.each do |answer| %>
+    Question: <%= answer.question.title %> <br>
+      Response: <a href="/questions/<%=answer.question_id%>"><%=answer.text%></a><br><br>
+
+  <% end %>
+</div>

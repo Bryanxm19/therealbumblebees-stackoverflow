@@ -1,12 +1,12 @@
 <a href = '/questions/new'>New Question</a>
 <ul>
-  <% @questions.each do |question| %>
+  <%@questions.each do |question| %>
     <li>
       <span>
         <%if question.vote_count == 1%>
-        <%=question.vote_count%> vote
+         <%=question.vote_count%> vote
         <%else%>
-        <%=question.vote_count%> votes
+         <%=question.vote_count%> votes
         <%end%>
       </span>
 
@@ -18,7 +18,11 @@
       <%end%>
  </span>
  <a href="/questions/<%= question.id %>"><%=question.title%></a>
- <span>By <%=question.user.username%></span>
+
+  <span>By <a href="/users/<%=question.user.id%>"><%=question.user.username%></a></span>
+  <span>asked <%=question.time_ago_in_words(question.created_at)%> ago</span>
  <%end%>
     </li>
+  <%end%>
+
 </ul>
