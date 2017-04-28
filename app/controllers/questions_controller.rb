@@ -60,6 +60,15 @@ put '/questions/:id' do
   end
 end
 
+delete '/questions/:id' do
+  @question = Question.find(params[:id])
+
+  if logged_in? && (current_user.id == @question.user_id)
+    @question.destroy
+  end
+  redirect "/questions"
+end
+
 post "/questions/:question_id/answers/new" do
   if logged_in?
   answer = Answer.new(params[:answer])

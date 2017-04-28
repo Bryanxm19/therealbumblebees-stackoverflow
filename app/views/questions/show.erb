@@ -6,7 +6,13 @@
     <p><%= @question.body %></p>
     <br>
     <% if current_user.id == @question.user_id %>
-    <a href="/questions/<%= @question.id %>/edit">Edit Question</a>
+    <form action = "/questions/<%= @question.id %>/edit" method = "get">
+    <input type="submit" value="Edit Question">
+    </form>
+    <form action = "/questions/<%= @question.id %>" method = "post">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="submit" value="Delete Question">
+    </form>
     <% end %>
   </div>
 
@@ -31,6 +37,7 @@
         </table>
       <% end %>
     <% end %>
+
 
     <!-- Submit new answer -->
     <%= erb :_errors %>
