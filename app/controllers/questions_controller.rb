@@ -3,11 +3,6 @@ get '/questions' do
   erb :'/questions/index'
 end
 
-get '/questions/:id' do
-  @question = Question.find_by_id(params[:id])
-  erb :'/questions/show'
-end
-
 get '/questions/new' do
   if logged_in?
 
@@ -20,6 +15,7 @@ get '/questions/new' do
 end
 
 post '/questions' do
+  @question = Question.find_by_id(params[:id])
   if logged_in?
     question = Question.new(params[:question])
     if question.save
@@ -33,6 +29,12 @@ post '/questions' do
     erb :'/login'
   end
 end
+
+get '/questions/:id' do
+  @question = Question.find_by_id(params[:id])
+  erb :'/questions/show'
+end
+
 
 get '/questions/:id/edit' do
     @question = Question.find(params[:id])

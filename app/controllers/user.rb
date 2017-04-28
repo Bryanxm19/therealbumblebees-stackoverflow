@@ -4,8 +4,8 @@ end
 
 get '/users/:id' do
   @user = User.find_by(id: params[:id])
-  # @question = Question.find_by(question_id: params[:question_id])
-  puts @question
+  @question = Question.find_by(user_id: params[:question_id])
+
   erb :'/users/show'
 end
 
