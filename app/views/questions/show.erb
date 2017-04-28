@@ -7,7 +7,15 @@
     <p>asked <%= @question.time_ago_in_words(@question.created_at)%></p>
     <p><a href="/users/<%=@question.user.id%>"><%= @question.user.username %></a></p>
     <br>
-    <a href="/questions/<%= @question.id %>/edit">Edit Question</a>
+    <% if current_user.id == @question.user_id %>
+    <form action = "/questions/<%= @question.id %>/edit" method = "get">
+    <input type="submit" value="Edit Question">
+    </form>
+    <form action = "/questions/<%= @question.id %>" method = "post">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="submit" value="Delete Question">
+    </form>
+    <% end %>
   </div>
 
   <!-- Show answers -->
@@ -26,12 +34,24 @@
                 <button type="submit" name="down" value="submit_value" class="fa fa-chevron-down vote-button up-down-vote-button down-button"></button>
               </form>
             </td>
-            <td><%= answer.text %></td>
-            <td class="answer user and time">answered <%= answer.time_ago_in_words(answer.created_at) %> by <a href="/users/<%=answer.user.id%>"><%= answer.user.username %></a></td>
+            <td>
+              <%= answer.text %><br><br>
+              <p class="answer user and time">answered <%= answer.time_ago_in_words(answer.created_at) %> by <a href="/users/<%=answer.user.id%>"><%= answer.user.username %></a></p>
+              <% if current_user.id == answer.user_id %>
+              <form action = "/answers/<%= answer.id %>/edit" method = "get">
+              <input type="submit" value="Edit Answer">
+              </form>
+              <form action = "/answers/<%= answer.id %>" method = "post">
+              <input type="hidden" name="_method" value="DELETE">
+              <input type="submit" value="Delete Answer">
+              </form>
+              <% end %>
+            </td>
           </tr>
         </table>
       <% end %>
     <% end %>
+
 
     <!-- Submit new answer -->
     <%= erb :_errors %>
