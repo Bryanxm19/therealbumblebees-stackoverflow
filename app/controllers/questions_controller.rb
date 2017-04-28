@@ -3,8 +3,14 @@ get '/questions' do
   erb :'/questions/index'
 end
 
+get '/questions/:id' do
+  @question = Question.find_by_id(params[:id])
+  erb :'/questions/show'
+end
+
 get '/questions/new' do
   if logged_in?
+
     erb :'/questions/new'
   else
     @errors = ["Please Login"]
@@ -26,11 +32,6 @@ post '/questions' do
     @errors = ["Please Login"]
     erb :'/login'
   end
-end
-
-get '/questions/:id' do
-  @question = Question.find(params[:id])
-  erb :'/questions/show'
 end
 
 get '/questions/:id/edit' do
