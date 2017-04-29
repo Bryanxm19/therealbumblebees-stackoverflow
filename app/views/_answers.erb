@@ -25,7 +25,7 @@
               <form action = "/answers/<%= answer.id %>/edit" method = "get">
               <input type="submit" value="Edit Answer">
               </form>
-              <form action = "/answers/<%= answer.id %>" method = "post">
+              <form action = "/answers/<%= answer.id %>" method = "post" class="delete-answer" id="<%= answer.id %>">
               <input type="hidden" name="_method" value="DELETE">
               <input type="submit" value="Delete Answer">
               </form>
