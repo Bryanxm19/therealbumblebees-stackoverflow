@@ -33,7 +33,6 @@ $(document).ready(function() {
         $(button).next().next().next().next().css("color", "dimgrey")
         // $(button).removeClass("voted")
       })
-      up_click = true;
     } else {
       // even clicks
       // if up click is already pressed, undo the upvote (destroy the vote)
@@ -47,7 +46,6 @@ $(document).ready(function() {
         $(button).css("color", "dimgrey")
         $(button).removeClass("voted")
       })
-      up_click = false;
     }
   });
 
@@ -86,7 +84,6 @@ $(document).ready(function() {
         $(button).prev().prev().prev().prev().css("color", "dimgrey")
         // $(button).removeClass("voted")
       })
-      down_click = true;
     } else {
       // even click
       // if down click is already pressed, undo the downvote (destroy the vote)
@@ -100,7 +97,6 @@ $(document).ready(function() {
         $(button).css("color", "dimgrey")
         $(button).removeClass("voted")
       })
-      down_click = false;
     }
   });
 
