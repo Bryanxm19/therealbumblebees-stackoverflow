@@ -1,6 +1,3 @@
-var up_click = false;
-var down_click = false;
-
 $(document).ready(function() {
   // Upvote Button
   $("body").on("click", "button.up-button", function(event) {
@@ -11,9 +8,9 @@ $(document).ready(function() {
     var answer_id = $(this).parent().attr("answer")
     var vote_type = $(this).attr("name")
 
-    if (up_click === false) {
+    if (!$(button).hasClass("voted")) {
       // odd clicks
-      if (down_click === false) {
+      if (!$(button).next().next().next().next().hasClass("voted")) {
         // if up click is not pressed and down click is not pressed, create one upvote
         request = $.ajax({
           url: "/questions/" + question_id + "/answers/" + answer_id + "/vote",
@@ -34,7 +31,7 @@ $(document).ready(function() {
         $(button).css("color", "darkorange")
         $(button).addClass("voted")
         $(button).next().next().next().next().css("color", "dimgrey")
-        $(button).removeClass("voted")
+        // $(button).removeClass("voted")
       })
       up_click = true;
     } else {
@@ -64,9 +61,9 @@ $(document).ready(function() {
     var vote_type = $(this).attr("name")
     var opposite_vote_type = $(this).attr("opposite")
 
-    if (down_click === false) {
+    if (!$(button).hasClass("voted")) {
       // odd click
-      if (up_click === false) {
+      if (!$(button).prev().prev().prev().prev().hasClass("voted")) {
         // if down click is not pressed and up click is not pressed, create one downvote
          request = $.ajax({
           url: "/questions/" + question_id + "/answers/" + answer_id + "/vote",
@@ -87,7 +84,7 @@ $(document).ready(function() {
         $(button).css("color", "darkred")
         $(button).addClass("voted")
         $(button).prev().prev().prev().prev().css("color", "dimgrey")
-        $(button).removeClass("voted")
+        // $(button).removeClass("voted")
       })
       down_click = true;
     } else {
