@@ -2,10 +2,31 @@
 
   <!-- Show question -->
   <div class="question">
-    <h1><%= @question.title %></h1>
-    <p><%= @question.body %></p>
-    <p>asked <%= @question.time_ago_in_words(@question.created_at)%> ago</p>
-    <p><a href="/users/<%=@question.user.id%>"><%= @question.user.username %></a></p>
+    <table>
+      <tr>
+        <td>
+          <form method="post" action="/questions/<%= @question.id %>/vote" class="inline" question="<%= @question.id %>">
+            <% if current_user %>
+              <% if Vote.find_by(user_id: current_user.id, votable_id: @question.id, votable_type: "Question") != nil %>
+                <button type="submit" name="up" opposite="down" value="submit_value" class="fa fa-chevron-up vote-button up-down-vote-button up-button-question voted" voted="true"></button>
+              <% else %>
+                <button type="submit" name="up" opposite="down" value="submit_value" class="fa fa-chevron-up vote-button up-down-vote-button up-button-question"></button>
+              <% end %>
+              <br>
+              <text class="up-down-vote-button"><%= @question.vote_count %></text>
+              <br>
+              <button type="submit" name="down" opposite="up" value="submit_value" class="fa fa-chevron-down vote-button up-down-vote-button down-button-question"></button>
+            <% end %>
+          </form>
+        </td>
+        <td>
+          <h1><%= @question.title %></h1>
+          <p><%= @question.body %></p>
+          <p>asked <%= @question.time_ago_in_words(@question.created_at)%> ago</p>
+          <p><a href="/users/<%=@question.user.id%>"><%= @question.user.username %></a></p>
+        </td>
+      </tr>
+    </table>
     <br>
     <% if logged_in? %>
       <% if current_user.id == @question.user_id %>

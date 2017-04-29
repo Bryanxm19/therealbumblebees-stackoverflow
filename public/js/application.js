@@ -1,9 +1,6 @@
-var up_click = false;
-var down_click = false;
-
 $(document).ready(function() {
-  // Upvote Button
-  $("button.up-button").on("click", function(event) {
+  // Upvote Button for answer
+  $("body").on("click", "button.up-button", function(event) {
     event.preventDefault();
     var button = this
 
@@ -11,9 +8,9 @@ $(document).ready(function() {
     var answer_id = $(this).parent().attr("answer")
     var vote_type = $(this).attr("name")
 
-    if (up_click === false) {
+    if (!$(button).hasClass("voted")) {
       // odd clicks
-      if (down_click === false) {
+      if (!$(button).next().next().next().next().hasClass("voted")) {
         // if up click is not pressed and down click is not pressed, create one upvote
         request = $.ajax({
           url: "/questions/" + question_id + "/answers/" + answer_id + "/vote",
@@ -34,9 +31,8 @@ $(document).ready(function() {
         $(button).css("color", "darkorange")
         $(button).addClass("voted")
         $(button).next().next().next().next().css("color", "dimgrey")
-        $(button).removeClass("voted")
+        // $(button).removeClass("voted")
       })
-      up_click = true;
     } else {
       // even clicks
       // if up click is already pressed, undo the upvote (destroy the vote)
@@ -50,12 +46,11 @@ $(document).ready(function() {
         $(button).css("color", "dimgrey")
         $(button).removeClass("voted")
       })
-      up_click = false;
     }
   });
 
-  // Downvote Button
-  $("button.down-button").on("click", function(event) {
+  // Downvote Button for answer
+  $("body").on("click", "button.down-button", function(event) {
     event.preventDefault();
     var button = this
 
@@ -64,9 +59,9 @@ $(document).ready(function() {
     var vote_type = $(this).attr("name")
     var opposite_vote_type = $(this).attr("opposite")
 
-    if (down_click === false) {
+    if (!$(button).hasClass("voted")) {
       // odd click
-      if (up_click === false) {
+      if (!$(button).prev().prev().prev().prev().hasClass("voted")) {
         // if down click is not pressed and up click is not pressed, create one downvote
          request = $.ajax({
           url: "/questions/" + question_id + "/answers/" + answer_id + "/vote",
@@ -87,9 +82,8 @@ $(document).ready(function() {
         $(button).css("color", "darkred")
         $(button).addClass("voted")
         $(button).prev().prev().prev().prev().css("color", "dimgrey")
-        $(button).removeClass("voted")
+        // $(button).removeClass("voted")
       })
-      down_click = true;
     } else {
       // even click
       // if down click is already pressed, undo the downvote (destroy the vote)
@@ -103,10 +97,109 @@ $(document).ready(function() {
         $(button).css("color", "dimgrey")
         $(button).removeClass("voted")
       })
-      down_click = false;
     }
   });
 
+  // Upvote Button for question
+  $("body").on("click", "button.up-button-question", function(event) {
+    event.preventDefault();
+    var button = this
+
+    var question_id = $(this).parent().attr("question")
+    var vote_type = $(this).attr("name")
+
+    if (!$(button).hasClass("voted")) {
+      // odd clicks
+      if (!$(button).next().next().next().next().hasClass("voted")) {
+        // if up click is not pressed and down click is not pressed, create one upvote
+        request = $.ajax({
+          url: "/questions/" + question_id + "/vote",
+          method: "POST",
+          data: {question_id: question_id, vote_type: vote_type}
+        })
+      } else {
+        // if up click is not pressed and down click is pressed, create two upvotes
+        request = $.ajax({
+        url: "/questions/" + question_id + "/vote_twice",
+        method: "POST",
+        data: {question_id: question_id, vote_type: vote_type}
+        })
+      }
+
+      request.done(function(response) {
+        $(button).next().next().html(response)
+        $(button).css("color", "darkorange")
+        $(button).addClass("voted")
+        $(button).next().next().next().next().css("color", "dimgrey")
+        // $(button).removeClass("voted")
+      })
+    } else {
+      // even clicks
+      // if up click is already pressed, undo the upvote (destroy the vote)
+      $.ajax({
+        url: "/questions/" + question_id + "/unvote",
+        method: "POST",
+        data: {question_id: question_id}
+      })
+      .done(function(response) {
+        $(button).next().next().html(response)
+        $(button).css("color", "dimgrey")
+        $(button).removeClass("voted")
+      })
+    }
+  });
+
+  // Downvote Button for question
+  $("body").on("click", "button.down-button-question", function(event) {
+    event.preventDefault();
+    var button = this
+
+    var question_id = $(this).parent().attr("question")
+    var vote_type = $(this).attr("name")
+    var opposite_vote_type = $(this).attr("opposite")
+
+    if (!$(button).hasClass("voted")) {
+      // odd click
+      if (!$(button).prev().prev().prev().prev().hasClass("voted")) {
+        // if down click is not pressed and up click is not pressed, create one downvote
+         request = $.ajax({
+          url: "/questions/" + question_id + "/vote",
+          method: "POST",
+          data: {question_id: question_id, vote_type: vote_type}
+        })
+      } else {
+        // if down click is not pressed and up click is pressed, create two downvotes
+          request = $.ajax({
+          url: "/questions/" + question_id + "/vote_twice",
+          method: "POST",
+          data: {question_id: question_id, vote_type: vote_type}
+        })
+      }
+
+      request.done(function(response) {
+        $(button).prev().prev().html(response)
+        $(button).css("color", "darkred")
+        $(button).addClass("voted")
+        $(button).prev().prev().prev().prev().css("color", "dimgrey")
+        // $(button).removeClass("voted")
+      })
+    } else {
+      // even click
+      // if down click is already pressed, undo the downvote (destroy the vote)
+      $.ajax({
+        url: "/questions/" + question_id + "/unvote",
+        method: "POST",
+        data: {question_id: question_id}
+      })
+      .done(function(response) {
+        $(button).prev().prev().html(response)
+        $(button).css("color", "dimgrey")
+        $(button).removeClass("voted")
+      })
+    }
+  });
+
+  // Creating a new answer
   $(".question-answer-container").on("submit", "#new-answer", function(event) {
     event.preventDefault();
 
@@ -124,6 +217,7 @@ $(document).ready(function() {
     })
   });
 
+  // Deleting an answer
   $("body").on("submit", ".delete-answer", function(event) {
     event.preventDefault();
 
