@@ -74,9 +74,15 @@ end
 
 post "/questions/:question_id/answers/new" do
   if logged_in?
-  answer = Answer.new(params[:answer])
+    answer = Answer.new(params[:answer])
     if answer.save
-      redirect "/questions/#{params[:answer][:question_id]}"
+      if request.xhr?
+        @question = answer.question
+        status 200
+        erb :_answers, layout: false
+      else
+        redirect "/questions/#{params[:answer][:question_id]}"
+      end
     else
       # if a current user, show errors
       # else redirect to login
