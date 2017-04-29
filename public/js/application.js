@@ -123,4 +123,20 @@ $(document).ready(function() {
       $("#new-answer").trigger('reset');
     })
   });
+
+  $("body").on("submit", ".delete-answer", function(event) {
+    event.preventDefault();
+
+    var url = $(this).attr("action");
+    var id = $(this).attr("id");
+
+    $.ajax({
+      type: "delete",
+      url: url,
+      data: {id: id}
+    })
+    .done(function(response) {
+      $("#"+response.answer_id).parent().parent().remove();
+    })
+  })
 });
