@@ -8,14 +8,14 @@
           <form method="post" action="/questions/<%= @question.id %>/vote" class="inline" question="<%= @question.id %>">
             <% if current_user %>
               <% if Vote.find_by(user_id: current_user.id, votable_id: @question.id, votable_type: "Question") != nil %>
-                <button type="submit" name="up" opposite="down" value="submit_value" class="fa fa-chevron-up vote-button up-down-vote-button up-button voted" voted="true"></button>
+                <button type="submit" name="up" opposite="down" value="submit_value" class="fa fa-chevron-up vote-button up-down-vote-button up-button-question voted" voted="true"></button>
               <% else %>
-                <button type="submit" name="up" opposite="down" value="submit_value" class="fa fa-chevron-up vote-button up-down-vote-button up-button"></button>
+                <button type="submit" name="up" opposite="down" value="submit_value" class="fa fa-chevron-up vote-button up-down-vote-button up-button-question"></button>
               <% end %>
               <br>
               <text class="up-down-vote-button"><%= @question.vote_count %></text>
               <br>
-              <button type="submit" name="down" opposite="up" value="submit_value" class="fa fa-chevron-down vote-button up-down-vote-button down-button"></button>
+              <button type="submit" name="down" opposite="up" value="submit_value" class="fa fa-chevron-down vote-button up-down-vote-button down-button-question"></button>
             <% end %>
           </form>
         </td>
