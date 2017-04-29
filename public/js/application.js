@@ -3,7 +3,7 @@ var down_click = false;
 
 $(document).ready(function() {
   // Upvote Button
-  $("button.up-button").on("click", function(event) {
+  $("body").on("click", "button.up-button", function(event) {
     event.preventDefault();
     var button = this
 
@@ -55,7 +55,7 @@ $(document).ready(function() {
   });
 
   // Downvote Button
-  $("button.down-button").on("click", function(event) {
+  $("body").on("click", "button.down-button", function(event) {
     event.preventDefault();
     var button = this
 
