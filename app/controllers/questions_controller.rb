@@ -72,6 +72,32 @@ delete '/questions/:id' do
   redirect "/questions"
 end
 
+post "/questions/:question_id/vote" do
+  question = Question.find(params[:question_id])
+  vote_type = params[:vote_type]
+  question.votes.create(user_id: session[:user_id], up_down: vote_type)
+  question.vote_count.to_s
+end
+
+post "/questions/:question_id/vote_twice" do
+  question = Question.find(params[:question_id])
+
+  vote = Vote.find_by(user_id: current_user.id, votable_id: params[:question_id], votable_type: "Question")
+  vote.destroy
+
+  question = Question.find(params[:question_id])
+  vote_type = params[:vote_type]
+  question.votes.create(user_id: session[:user_id], up_down: vote_type)
+  question.vote_count.to_s
+end
+
+post "/questions/:question_id/unvote" do
+  vote = Vote.find_by(user_id: current_user.id, votable_id: params[:question_id], votable_type: "Question")
+  vote.destroy
+  question = Question.find(params[:question_id])
+  question.vote_count.to_s
+end
+
 get "/questions/:question_id/comments/new" do
   if logged_in?
     @question = Question.find(params[:question_id])
