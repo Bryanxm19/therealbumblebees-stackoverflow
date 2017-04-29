@@ -106,4 +106,37 @@ $(document).ready(function() {
       down_click = false;
     }
   });
+
+  $(".question-answer-container").on("submit", "#new-answer", function(event) {
+    event.preventDefault();
+
+    var data = $(this).serialize();
+    var url = $(this).attr("action");
+
+    $.ajax({
+      method: "POST",
+      url: url,
+      data: data
+    })
+    .done(function(response) {
+      $("#answer").empty().append(response);
+      $("#new-answer").trigger('reset');
+    })
+  });
+
+  $("body").on("submit", ".delete-answer", function(event) {
+    event.preventDefault();
+
+    var url = $(this).attr("action");
+    var id = $(this).attr("id");
+
+    $.ajax({
+      type: "delete",
+      url: url,
+      data: {id: id}
+    })
+    .done(function(response) {
+      $("#"+response.answer_id).parent().parent().remove();
+    })
+  })
 });
